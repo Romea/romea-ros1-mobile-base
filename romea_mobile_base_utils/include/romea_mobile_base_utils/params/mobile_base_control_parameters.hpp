@@ -12,80 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_CONTROL_PARAMETERS_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_CONTROL_PARAMETERS_HPP_
 
-// std
-#include <limits>
-#include <memory>
-#include <string>
-
 // ros
-#include "rclcpp/node.hpp"
+#include <ros/ros.h>
 
 // romea
-#include "romea_core_mobile_base/info/MobileBaseControl.hpp"
-#include "romea_common_utils/params/node_parameters.hpp"
+#include <romea_common_utils/params/ros_param.hpp>
+#include <romea_core_mobile_base/info/MobileBaseControl.hpp>
 
 namespace romea
 {
-namespace ros2
+namespace ros1
 {
 
-template<typename Node>
-void declare_steering_angle_control_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+inline core::SteeringAngleControl get_steering_angle_control_info(const ros::NodeHandle& nh)
 {
-  declare_parameter<double>(node, parameters_ns, "sensor.angle_std");
-
-  declare_parameter_with_default<double>(
-    node, parameters_ns, "sensor.angle_range",
-    std::numeric_limits<double>::max());
-
-  declare_parameter<double>(node, parameters_ns, "command.maximal_angle");
-  declare_parameter<double>(node, parameters_ns, "command.maximal_angular_speed");
+  return {
+    {load_param<double>(nh, "sensor/angle_std"),
+     load_param<double>(nh, "sensor/angle_range")},
+    {load_param<double>(nh, "command/maximal_angle"),
+     load_param<double>(nh, "command/maximal_angular_speed")}};
 }
 
-template<typename Node>
-core::SteeringAngleControl get_steering_angle_control_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+inline core::WheelSpeedControl get_wheel_speed_control_info(const ros::NodeHandle& nh)
 {
-  return {{get_parameter<double>(node, parameters_ns, "sensor.angle_std"),
-    get_parameter<double>(node, parameters_ns, "sensor.angle_range")},
-    {get_parameter<double>(node, parameters_ns, "command.maximal_angle"),
-      get_parameter<double>(node, parameters_ns, "command.maximal_angular_speed")}};
+  return {
+    {load_param<double>(nh, "sensor/speed_std"),
+     load_param<double>(nh, "sensor/speed_range")},
+    {load_param<double>(nh, "command/maximal_speed"),
+     load_param<double>(nh, "command/maximal_acceleration")}};
 }
 
-template<typename Node>
-void declare_wheel_speed_control_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
-{
-  declare_parameter<double>(node, parameters_ns, "sensor.speed_std");
-
-  declare_parameter_with_default<double>(
-    node, parameters_ns, "sensor.speed_range",
-    std::numeric_limits<double>::max());
-
-  declare_parameter<double>(node, parameters_ns, "command.maximal_speed");
-  declare_parameter<double>(node, parameters_ns, "command.maximal_acceleration");
-}
-
-template<typename Node>
-core::WheelSpeedControl get_wheel_speed_control_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
-{
-  return {{get_parameter<double>(node, parameters_ns, "sensor.speed_std"),
-    get_parameter<double>(node, parameters_ns, "sensor.speed_range")},
-    {get_parameter<double>(node, parameters_ns, "command.maximal_speed"),
-      get_parameter<double>(node, parameters_ns, "command.maximal_acceleration")}};
-}
-
-}  // namespace ros2
+}  // namespace ros1
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_CONTROL_PARAMETERS_HPP_

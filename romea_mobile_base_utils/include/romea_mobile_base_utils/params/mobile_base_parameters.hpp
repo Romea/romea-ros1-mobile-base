@@ -12,13 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS_HPP_
-
-// std
-#include <memory>
-#include <string>
 
 // local
 #include "mobile_base_parameters1FAS2FWD.hpp"
@@ -32,71 +27,38 @@
 #include "mobile_base_parameters4WD.hpp"
 #include "mobile_base_parameters4WS4WD.hpp"
 
-
 namespace romea
 {
-namespace ros2
+namespace ros1
 {
 
-
-template<typename MobileBaseInfo, typename Node>
-void declare_mobile_base_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+template<typename MobileBaseInfo>
+MobileBaseInfo get_mobile_base_info(const ros::NodeHandle & nh)
 {
   if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo1FAS2FWD>) {
-    declare_mobile_base_info_1FAS2FWD(node, parameters_ns);
+    return get_mobile_base_info_1FAS2FWD(nh);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo1FAS2RWD>) {
-    declare_mobile_base_info_1FAS2RWD(node, parameters_ns);
+    return get_mobile_base_info_1FAS2RWD(nh);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2AS4WD>) {
-    declare_mobile_base_info_2AS4WD(node, parameters_ns);
+    return get_mobile_base_info_2AS4WD(nh);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWS2FWD>) {
-    declare_mobile_base_info_2FWS2FWD(node, parameters_ns);
+    return get_mobile_base_info_2FWS2FWD(nh);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWS2RWD>) {
-    declare_mobile_base_info_2FWS2RWD(node, parameters_ns);
+    return get_mobile_base_info_2FWS2RWD(nh);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWS4WD>) {
-    declare_mobile_base_info_2FWS4WD(node, parameters_ns);
+    return get_mobile_base_info_2FWS4WD(nh);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2TD>) {
-    declare_mobile_base_info_2TD(node, parameters_ns);
+    return get_mobile_base_info_2TD(nh);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2WD>) {
-    declare_mobile_base_info_2WD(node, parameters_ns);
+    return get_mobile_base_info_2WD(nh);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo4WD>) {
-    declare_mobile_base_info_4WD(node, parameters_ns);
+    return get_mobile_base_info_4WD(nh);
   } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo4WS4WD>) {
-    declare_mobile_base_info_4WS4WD(node, parameters_ns);
+    return get_mobile_base_info_4WS4WD(nh);
   }
 }
 
-
-template<typename MobileBaseInfo, typename Node>
-MobileBaseInfo get_mobile_base_info(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
-{
-  if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo1FAS2FWD>) {
-    return get_mobile_base_info_1FAS2FWD(node, parameters_ns);
-  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo1FAS2RWD>) {
-    return get_mobile_base_info_1FAS2RWD(node, parameters_ns);
-  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2AS4WD>) {
-    return get_mobile_base_info_2AS4WD(node, parameters_ns);
-  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWS2FWD>) {
-    return get_mobile_base_info_2FWS2FWD(node, parameters_ns);
-  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWS2RWD>) {
-    return get_mobile_base_info_2FWS2RWD(node, parameters_ns);
-  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2FWS4WD>) {
-    return get_mobile_base_info_2FWS4WD(node, parameters_ns);
-  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2TD>) {
-    return get_mobile_base_info_2TD(node, parameters_ns);
-  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo2WD>) {
-    return get_mobile_base_info_2WD(node, parameters_ns);
-  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo4WD>) {
-    return get_mobile_base_info_4WD(node, parameters_ns);
-  } else if constexpr (std::is_same_v<MobileBaseInfo, core::MobileBaseInfo4WS4WD>) {
-    return get_mobile_base_info_4WS4WD(node, parameters_ns);
-  }
-}
-
-}  // namespace ros2
+}  // namespace ros1
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS_HPP_

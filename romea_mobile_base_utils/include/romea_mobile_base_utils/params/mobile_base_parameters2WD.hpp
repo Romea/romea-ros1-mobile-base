@@ -12,16 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS2WD_HPP_
 #define ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS2WD_HPP_
 
-// std
-#include <memory>
-#include <string>
-
 // ros
-#include "rclcpp/node.hpp"
+#include <ros/node_handle.h>
 
 // romea
 #include "romea_core_mobile_base/info/MobileBaseInfo2WD.hpp"
@@ -31,34 +26,19 @@
 
 namespace romea
 {
-namespace ros2
+namespace ros1
 {
 
-template<typename Node>
-void declare_mobile_base_info_2WD(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
+inline core::MobileBaseInfo2WD get_mobile_base_info_2WD(const ros::NodeHandle & nh)
 {
-  declare_wheeled_axle_info(node, full_param_name(parameters_ns, "geometry"));
-  declare_wheel_speed_control_info(
-    node, full_param_name(parameters_ns, "wheels_speed_control"));
-  declare_inertia_info(node, full_param_name(parameters_ns, "inertia"));
-  declare_eigen_vector_parameter<Eigen::Vector3d>(node, parameters_ns, "control_point");
+  return {
+    get_wheeled_axle_info(ros::NodeHandle(nh, "geometry")),
+    get_wheel_speed_control_info(ros::NodeHandle(nh, "wheels_speed_control")),
+    get_inertia_info(ros::NodeHandle(nh, "inertia")),
+    loadEigenVector<Eigen::Vector3d>(nh, "control_point")};
 }
 
-template<typename Node>
-core::MobileBaseInfo2WD get_mobile_base_info_2WD(
-  std::shared_ptr<Node> node,
-  const std::string & parameters_ns)
-{
-  return {get_wheeled_axle_info(node, full_param_name(parameters_ns, "geometry")),
-    get_wheel_speed_control_info(
-      node, full_param_name(parameters_ns, "wheels_speed_control")),
-    get_inertia_info(node, full_param_name(parameters_ns, "inertia")),
-    get_eigen_vector_parameter<Eigen::Vector3d>(node, parameters_ns, "control_point")};
-}
-
-}  // namespace ros2
+}  // namespace ros1
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__PARAMS__MOBILE_BASE_PARAMETERS2WD_HPP_
