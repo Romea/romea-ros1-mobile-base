@@ -35,8 +35,8 @@ find_package(romea_core_mobile_base REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/control/command_interface.cpp
-  # src/conversions/command_conversions.cpp
-  # src/conversions/kinematic_conversions.cpp
+  src/conversions/command_conversions.cpp
+  src/conversions/kinematic_conversions.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
