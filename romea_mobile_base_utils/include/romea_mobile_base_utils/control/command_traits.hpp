@@ -24,14 +24,14 @@
 #include <romea_core_mobile_base/kinematic/axle_steering/TwoAxleSteeringMeasure.hpp>
 #include <romea_core_mobile_base/kinematic/omni_steering/OmniSteeringMeasure.hpp>
 #include <romea_core_mobile_base/kinematic/skid_steering/SkidSteeringMeasure.hpp>
-#include <romea_mobile_base_msgs/msg/omni_steering_measure_stamped.hpp>
-#include <romea_mobile_base_msgs/msg/one_axle_steering_measure_stamped.hpp>
-#include <romea_mobile_base_msgs/msg/two_axle_steering_measure_stamped.hpp>
-#include <romea_mobile_base_msgs/msg/skid_steering_measure_stamped.hpp>
+#include <romea_mobile_base_msgs/OmniSteeringMeasureStamped.h>
+#include <romea_mobile_base_msgs/OneAxleSteeringMeasureStamped.h>
+#include <romea_mobile_base_msgs/TwoAxleSteeringMeasureStamped.h>
+#include <romea_mobile_base_msgs/SkidSteeringMeasureStamped.h>
 
 namespace romea
 {
-namespace ros2
+namespace ros1
 {
 
 template<typename CommandType>
@@ -41,7 +41,7 @@ template<>
 struct CommandTraits<core::OneAxleSteeringCommand>
 {
   using Measure = core::OneAxleSteeringMeasure;
-  using MeasureMsg = romea_mobile_base_msgs::msg::OneAxleSteeringMeasureStamped;
+  using MeasureMsg = romea_mobile_base_msgs::OneAxleSteeringMeasureStamped;
   using CommandLimits = core::OneAxleSteeringCommandLimits;
 };
 
@@ -49,7 +49,7 @@ template<>
 struct CommandTraits<core::TwoAxleSteeringCommand>
 {
   using Measure = core::TwoAxleSteeringMeasure;
-  using MeasureMsg = romea_mobile_base_msgs::msg::TwoAxleSteeringMeasureStamped;
+  using MeasureMsg = romea_mobile_base_msgs::TwoAxleSteeringMeasureStamped;
   using CommandLimits = core::TwoAxleSteeringCommandLimits;
 };
 
@@ -57,7 +57,7 @@ template<>
 struct CommandTraits<core::SkidSteeringCommand>
 {
   using Measure = core::SkidSteeringMeasure;
-  using MeasureMsg = romea_mobile_base_msgs::msg::SkidSteeringMeasureStamped;
+  using MeasureMsg = romea_mobile_base_msgs::SkidSteeringMeasureStamped;
   using CommandLimits = core::SkidSteeringCommandLimits;
 };
 
@@ -65,11 +65,11 @@ template<>
 struct CommandTraits<core::OmniSteeringCommand>
 {
   using Measure = core::OmniSteeringMeasure;
-  using MeasureMsg = romea_mobile_base_msgs::msg::OmniSteeringMeasureStamped;
+  using MeasureMsg = romea_mobile_base_msgs::OmniSteeringMeasureStamped;
   using CommandLimits = core::OmniSteeringCommandLimits;
 };
 
-}  // namespace ros2
+}  // namespace ros1
 }  // namespace romea
 
 #endif  // ROMEA_MOBILE_BASE_UTILS__CONTROL__COMMAND_TRAITS_HPP_

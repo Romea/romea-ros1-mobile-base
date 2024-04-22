@@ -33,6 +33,11 @@ find_package(romea_core_mobile_base REQUIRED)
 # find_package(romea_cmd_mux_utils REQUIRED)
 
 
+catkin_package(
+  INCLUDE_DIRS include
+  CATKIN_DEPENDS ${${PROJECT_NAME}_CATKIN_DEPS}
+)
+
 add_library(${PROJECT_NAME} SHARED
   src/control/command_interface.cpp
   src/conversions/command_conversions.cpp
