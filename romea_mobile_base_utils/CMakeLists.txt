@@ -33,11 +33,6 @@ find_package(romea_core_mobile_base REQUIRED)
 # find_package(romea_cmd_mux_utils REQUIRED)
 
 
-catkin_package(
-  INCLUDE_DIRS include
-  CATKIN_DEPENDS ${${PROJECT_NAME}_CATKIN_DEPS}
-)
-
 add_library(${PROJECT_NAME} SHARED
   src/control/command_interface.cpp
   src/conversions/command_conversions.cpp
@@ -55,6 +50,22 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
   ${catkin_LIBRARIES}
   romea_core_common::romea_core_common
   romea_core_mobile_base::romea_core_mobile_base
+)
+
+catkin_package(
+  INCLUDE_DIRS include
+  CATKIN_DEPENDS ${${PROJECT_NAME}_CATKIN_DEPS}
+  LIBRARIES ${PROJECT_NAME}
+)
+
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+)
+
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
 
 #install(TARGETS ${PROJECT_NAME}_node DESTINATION lib/${PROJECT_NAME})

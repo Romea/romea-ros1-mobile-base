@@ -102,7 +102,7 @@ inline core::TwoAxleSteeringCommandLimits get_two_axle_steering_command_limits(
     get_maximal_rear_steering_angle(nh));
 }
 
-template<typename Limits, typename Node>
+template<typename Limits>
 Limits get_command_limits(const ros::NodeHandle & nh)
 {
   if constexpr (std::is_same_v<Limits, core::SkidSteeringCommandLimits>) {
